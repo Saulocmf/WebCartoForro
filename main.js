@@ -91,11 +91,17 @@ map.on('click',function (event) {
   });
   // const feature = map.forEachFeatureAtPixel(event.pixel, feat => feat);
   if (feature) {
-      console.log("Point clicked!!");
+      // console.log("Point clicked!!");
       const name = feature.get('name');
       const time = feature.get('time');
-
-    alert(`Location: ${name}\nTime: ${time}`);
+    
+    let popup = document.getElementById("popup");
+    popup.innerHTML = name + `</br>`+ time;
+    popup.style.display = "block"
+  }else{
+    if (popup.style.display === "block") {
+    popup.style.display = "none";
+    }
   }
   });
 

@@ -9,6 +9,13 @@ html, body {
   background-color: #CFD4C5;
 }
 
+.header{
+  background-image:linear-gradient(rgba(0,0,0,0.7), 
+  rgba(0,0,0,0.7)),
+  url('img/xilo-cordel.jpg');
+  background-size: 445px;
+}
+
 h1 {
   display: flex;
   justify-content: center; /* Centers items horizontally */
@@ -17,28 +24,35 @@ h1 {
   height: 85px;
 }
 
-.header{
-  background-image:linear-gradient(rgba(0,0,0,0.7), 
-  rgba(0,0,0,0.7)),
-  url('img/xilo-cordel.jpg');
-  background-size: 445px;
-}
-
 h3 {
   display: flex;
   justify-content: center;
   align-items: center;    
   color: white;
 }
+.container{
+  display: flex;
+  width: 100%;
+}
 
 #map {
   margin: auto;  
   bottom: 0;
   width: 80%;
-  height: 80%;
+  height: 80vh;
 }
 
 footer {
   position:absolute;
   bottom:0;
+}
+
+#popup{
+  display: none;
+  width: 200px;
+  flex-shrink: 0;
+  padding: 20px;
+  color: #ffffff;
+  background: goldenrod;
+  box-shadow: 0 0 10px rgba(0,0,0,0.35);
 }
