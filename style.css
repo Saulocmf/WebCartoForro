@@ -1,0 +1,33 @@
+@import "node_modules/ol/ol.css";
+
+html, body {
+  margin: 0;
+  height: 100%;
+  /* display: flex; */
+  color:#160c74;
+  background-color: #CFD4C5;
+}
+
+h1 {
+  display: flex;
+  justify-content: center; /* Centers items horizontally */
+  align-items: center;     /* Centers items vertically */
+}
+
+h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+}
+
+#map {
+  position: relative;   
+  bottom: 0;
+  width: 100%;
+  height: 80%;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+}
