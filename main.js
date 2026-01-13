@@ -104,3 +104,4 @@ map.on('pointermove', function (event) {
   const hit = map.hasFeatureAtPixel(event.pixel);
   map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
+

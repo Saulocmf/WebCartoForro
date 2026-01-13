@@ -2,6 +2,7 @@
 
 html, body {
   margin: 0;
+  padding: 0;
   height: 100%;
   /* display: flex; */
   color:#160c74;
@@ -12,18 +13,28 @@ h1 {
   display: flex;
   justify-content: center; /* Centers items horizontally */
   align-items: center;     /* Centers items vertically */
+  color: #e66100;
+  height: 85px;
+}
+
+.header{
+  background-image:linear-gradient(rgba(0,0,0,0.7), 
+  rgba(0,0,0,0.7)),
+  url('img/xilo-cordel.jpg');
+  background-size: 445px;
 }
 
 h3 {
   display: flex;
   justify-content: center;
   align-items: center;    
+  color: white;
 }
 
 #map {
-  position: relative;   
+  margin: auto;  
   bottom: 0;
-  width: 100%;
+  width: 80%;
   height: 80%;
 }
 
