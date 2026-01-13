@@ -41,9 +41,17 @@ const listeForros = [
     name: "Toi Toi le zinc",
     geometry: new Point(fromLonLat([4.8769956,45.7798382])), // Coords en EPSG: 4326
     time: "21h",
-    frequence:"1 fois par mois",
+    frequence:"1x /mois",
     saison: "hiver/printemps"
-  }
+  },
+  {
+    id:4,
+    name:"Livestation DIY",
+    geometry: new Point(fromLonLat([ 4.839964187,45.753179459])),
+    time: "21h30",
+    frequence: "1x /mois",
+    saison: "hiver"
+  },
 ]
 
 // map(loop) through the list to create a feature
@@ -91,16 +99,17 @@ map.on('click',function (event) {
   });
   // const feature = map.forEachFeatureAtPixel(event.pixel, feat => feat);
   if (feature) {
-      // console.log("Point clicked!!");
-      const name = feature.get('name');
-      const time = feature.get('time');
+    const name = feature.get('name');
+    const time = feature.get('time');
+    const frequence = feature.get('frequence');
+    const saison = feature.get('saison')
     
     let popup = document.getElementById("popup");
-    popup.innerHTML = name + `</br>`+ time;
-    popup.style.display = "block"
-  }else{
+    popup.innerHTML = name + `</br>` + time + `</br>` + frequence + `</br>` + saison;
+    popup.style.display = "block" //Opens the popup window
+  } else {  // If clicks outside of a feature:
     if (popup.style.display === "block") {
-    popup.style.display = "none";
+    popup.style.display = "none"; //Closes the popup window if it is opened
     }
   }
   });

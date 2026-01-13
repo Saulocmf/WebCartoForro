@@ -49,7 +49,7 @@ footer {
 
 #popup{
   display: none;
-  width: 200px;
+  width: 350px;
   flex-shrink: 0;
   padding: 20px;
   color: #ffffff;
