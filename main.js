@@ -29,20 +29,23 @@ const listeForros = [
     time: "20h",
     frequence: "1 fois par semaine",
     saison: "toute l'année",
+    image: "baragones.jpg"
   },{
     id: 2,
     name: "Place de Jacobins",
     geometry: new Point(fromLonLat([4.8327698,45.7605099])), // Coords en EPSG: 4326
     time: "19h",
     frequence: "1 fois par semaine",
-    saison: "été"
+    saison: "été",
+    image: "jacobins.jpg"
   },{
     id: 3,
     name: "Toi Toi le zinc",
     geometry: new Point(fromLonLat([4.8769956,45.7798382])), // Coords en EPSG: 4326
     time: "21h",
     frequence:"1x /mois",
-    saison: "hiver/printemps"
+    saison: "hiver/printemps",
+    image: "toitoi.jpg"
   },
   {
     id:4,
@@ -50,7 +53,8 @@ const listeForros = [
     geometry: new Point(fromLonLat([ 4.839964187,45.753179459])),
     time: "21h30",
     frequence: "1x /mois",
-    saison: "hiver"
+    saison: "hiver",
+    image: "livestation.jpg"
   },
 ]
 
@@ -61,12 +65,13 @@ const forroPtFeatures = listeForros.map(point => {
     name: point.name,
     time: point.time,
     frequence: point.frequence,
-    saison: point.saison
+    saison: point.saison,
+    image: point.image
   })
 })
 
 
-// COnstruit un layer a partir des points 
+// Construit un layer a partir des points 
 const vectorSource = new VectorSource({
   features: forroPtFeatures,
 });
@@ -89,6 +94,8 @@ const map = new Map({
   view: new View({
     center: fromLonLat([4.85, 45.77]),
     zoom: 13,
+    minZoom: 12, // max zoom out
+    maxZoom: 19, // max zoom in
   })
 });
 
@@ -102,12 +109,23 @@ map.on('click',function (event) {
     const name = feature.get('name');
     const time = feature.get('time');
     const frequence = feature.get('frequence');
-    const saison = feature.get('saison')
+    const saison = feature.get('saison');
+    const image = feature.get('image');
     
     let popup = document.getElementById("popup");
-    popup.innerHTML = name + `</br>` + time + `</br>` + frequence + `</br>` + saison;
+    popup.innerHTML = `
+      <div class="popup-content">
+        <h3>${name}</h3>
+        <div class="details">
+          <p><strong>Time:</strong> ${time}</p>
+          <p><strong>Frequence:</strong> ${frequence}</p>
+          <p><strong>Saison:</strong> ${saison}</p>
+        </div>
+        <img src="/img/${image}" alt="${name}">
+      </div>
+    `;
     popup.style.display = "block" //Opens the popup window
-  } else {  // If clicks outside of a feature:
+  } else {                        // If clicks outside of a feature:
     if (popup.style.display === "block") {
     popup.style.display = "none"; //Closes the popup window if it is opened
     }
