@@ -136,7 +136,7 @@ map.on('click',function (event) {
     popOverlay.style.display = "block"  //Opens the popup window
   } else {                              // If clicks outside of a feature:
     closePopup()
-  }
+    }
   });
 
 // change mouse cursor when over marker
