@@ -16,6 +16,20 @@ html, body {
   background-size: 445px;
 }
 
+.button {
+  background-color: #888888;
+  border: none;
+  color: white;
+  padding: 7px 20px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 h1 {
   display: flex;
   justify-content: center; /* Centers items horizontally */
@@ -47,29 +61,53 @@ footer {
   bottom:0;
 }
 
-#popup{
+#popup-overlay{
   display: none;
   width: 350px;
   flex-shrink: 0;
   padding: 20px;
   color: #000000;
-  background: goldenrod;
+  background: rgba(77, 76, 75, 0.925);
   box-shadow: 0 0 10px rgba(0,0,0,0.35);
+  backdrop-filter: blur(5px);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 12px;
 }
 
-#popup h3 {
+#popup-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  background: rgba(214, 160, 45, 0.836);
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#popup-data h2 {
     margin-top: 0;
     color: #2c3e50;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
 }
 
-#popup img {
-    display: block;
+#popup-data img {
     margin-top: 15px;
     border-radius: 8px; /* Rounds the image corners */
     width: 100%;        /* Makes image responsive to the popup width */
     height: auto;
+}
+
+#close-popup-btn {
+    position: absolute;
+    bottom: 20px;           /* 20px from the bottom edge */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+#close-popup-btn:hover {
+    background-color: #89a9b9;
 }

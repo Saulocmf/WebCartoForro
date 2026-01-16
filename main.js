@@ -99,36 +99,43 @@ const map = new Map({
   })
 });
 
+function closePopup() {
+  const overlay = document.getElementById("popup-overlay"); 
+  if (overlay.style.display === "block") {
+    overlay.style.display = "none";  //Closes the popup window if it is opened
+  }
+}
+
+document.getElementById("close-popup-btn").addEventListener("click", (closePopup));
+
 // Returns event information when click on point
 map.on('click',function (event) {
   const feature = map.forEachFeatureAtPixel(event.pixel, function(feat) {
     return feat;
   });
   // const feature = map.forEachFeatureAtPixel(event.pixel, feat => feat);
+
+  // The pop-up window container
+  const popOverlay = document.getElementById("popup-overlay"); 
   if (feature) {
     const name = feature.get('name');
     const time = feature.get('time');
     const frequence = feature.get('frequence');
     const saison = feature.get('saison');
     const image = feature.get('image');
-    
-    let popup = document.getElementById("popup");
-    popup.innerHTML = `
-      <div class="popup-content">
-        <h3>${name}</h3>
+
+    const popupData = document.getElementById("popup-data");
+    popupData.innerHTML = `
+        <h2 style="margin-bottom: 10px;">${name}</h2>
         <div class="details">
-          <p><strong>Time:</strong> ${time}</p>
-          <p><strong>Frequence:</strong> ${frequence}</p>
+          <p><strong>Heure:</strong> ${time} | <strong>Frequence:</strong> ${frequence}</p>
           <p><strong>Saison:</strong> ${saison}</p>
         </div>
         <img src="/img/${image}" alt="${name}">
-      </div>
     `;
-    popup.style.display = "block" //Opens the popup window
-  } else {                        // If clicks outside of a feature:
-    if (popup.style.display === "block") {
-    popup.style.display = "none"; //Closes the popup window if it is opened
-    }
+    popOverlay.style.display = "block"  //Opens the popup window
+  } else {                              // If clicks outside of a feature:
+    closePopup()
   }
   });
 
