@@ -82,6 +82,10 @@ const vectorLayer = new VectorLayer({
   style:starStyle
 });
 
+const view = new View({
+  center: [0, 0],
+  zoom: 1,
+});
 
 const map = new Map({
   target: 'map',
@@ -110,10 +114,21 @@ document.getElementById("close-popup-btn").addEventListener("click", (closePopup
 
 // Returns event information when click on point
 map.on('click',function (event) {
-  const feature = map.forEachFeatureAtPixel(event.pixel, function(feat) {
+    // const feature = map.forEachFeatureAtPixel(event.pixel, feat => feat);
+    const feature = map.forEachFeatureAtPixel(event.pixel, function(feat) {
     return feat;
   });
-  // const feature = map.forEachFeatureAtPixel(event.pixel, feat => feat);
+
+  // Centraliser sur le point cliqué
+  if (feature){ 
+    const forroPt = feature.getGeometry()
+    const view = map.getView();
+    view.animate({
+      center: forroPt.getCoordinates(),
+      padding: [100, 0, 0, 300], // [Top, Right, Bottom, Left]
+      duration: 500
+    });
+  }
 
   // The pop-up window container
   const popOverlay = document.getElementById("popup-overlay"); 
