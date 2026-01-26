@@ -7,18 +7,8 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { RegularShape, Fill, Stroke, Style } from 'ol/style';
+import { RegularShape, Fill, Stroke, Style, Circle } from 'ol/style';
 
-// Creat a marker style
-const starStyle = new Style({
-  image: new RegularShape({
-    fill: new Fill({ color: 'gold' }),
-    stroke: new Stroke({ color: 'black', width: 2 }),
-    points: 5, 
-    radius: 9,     
-    radius2: 5,     
-  })
-});
 
 // Create a list of points
 const listeForros = [
@@ -70,16 +60,47 @@ const forroPtFeatures = listeForros.map(point => {
   })
 })
 
-
 // Construit un layer a partir des points 
 const vectorSource = new VectorSource({
   features: forroPtFeatures,
+});
+
+// Creat a marker style
+const starStyle = new Style({
+  image: new RegularShape({
+    fill: new Fill({ color: 'gold' }),
+    stroke: new Stroke({ color: 'black', width: 2 }),
+    points: 5, 
+    radius: 9,     
+    radius2: 5,     
+  })
 });
 
 // Construit la couche vectoriel pour la carte a partir du vector source et l'habille avec un style
 const vectorLayer = new VectorLayer({
   source: vectorSource,
   style:starStyle
+});
+
+//Contruit une souce pour le highlight
+const hightlightSource = new VectorSource();
+
+// define a style du Hightlight
+const highlightStyle = new Style({
+  image: new Circle({
+    radius: 17,
+    stroke: new Stroke({
+      color:'#ffcc33',
+      width: 1
+    }),
+    fill: new Fill({color: 'rgba(211, 11, 11, 0.3)'})
+  })
+});
+
+//Add highlight layer to map:
+const highlightLayer = new VectorLayer({
+  source: hightlightSource,
+  style: highlightStyle
 });
 
 const view = new View({
@@ -90,10 +111,9 @@ const view = new View({
 const map = new Map({
   target: 'map',
   layers: [
-    new TileLayer({
-      source: new OSM()
-    }),
-    vectorLayer
+    new TileLayer({source: new OSM()}),
+    vectorLayer,
+    highlightLayer,
   ],
   view: new View({
     center: fromLonLat([4.85, 45.77]),
@@ -119,26 +139,37 @@ map.on('click',function (event) {
     return feat;
   });
 
-  // Centraliser sur le point cliqué
-  if (feature){ 
-    const forroPt = feature.getGeometry()
-    const view = map.getView();
-    view.animate({
-      center: forroPt.getCoordinates(),
-      padding: [100, 0, 0, 300], // [Top, Right, Bottom, Left]
-      duration: 500
-    });
-  }
-
   // The pop-up window container
   const popOverlay = document.getElementById("popup-overlay"); 
   if (feature) {
+
+
+    const forroPtGeometry = feature.getGeometry();
+    const forroPtCoord = forroPtGeometry.getCoordinates();
+    const view = map.getView();
+
+    // Clear any existing highlights
+    hightlightSource.clear();
+
+    // Create a ghost feature to show the circle
+    const highlightFeature = new Feature(new Point(forroPtCoord));
+    hightlightSource.addFeature(highlightFeature)
+
+    // Centraliser sur le point cliqué :
+    view.animate({
+      center: forroPtCoord,
+      padding: [100, 0, 0, 300], // [Top, Right, Bottom, Left]
+      duration: 500
+    });
+
+    // Get feature attributes :
     const name = feature.get('name');
     const time = feature.get('time');
     const frequence = feature.get('frequence');
     const saison = feature.get('saison');
     const image = feature.get('image');
 
+    // Construct html pop up element
     const popupData = document.getElementById("popup-data");
     popupData.innerHTML = `
         <h2 style="margin-bottom: 10px;">${name}</h2>
