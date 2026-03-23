@@ -93,7 +93,7 @@ const highlightStyle = new Style({
       color:'#ffcc33',
       width: 1
     }),
-    fill: new Fill({color: 'rgba(211, 11, 11, 0.3)'})
+    fill: new Fill({color: 'rgba(3, 127, 165, 0.34)'})
   })
 });
 
